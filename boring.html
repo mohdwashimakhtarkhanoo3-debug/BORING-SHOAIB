@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boring Shoaib</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+        background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: white;
+    }
+
+    h1 {
+        margin-bottom: 50px;
+        font-size: 2.5em;
+        letter-spacing: 2px;
+        text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    }
+
+    #coinButton {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: none;
+        background: #ffcc00;
+        font-size: 2em;
+        font-weight: bold;
+        color: #333;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    #coinButton:active {
+        transform: scale(0.95);
+        transition: transform 0.1s;
+    }
+
+    #coinCount {
+        position: absolute;
+        top: 20px;
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .plusOne {
+        position: absolute;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: #00ff00;
+        animation: moveUp 1s ease-out forwards;
+        pointer-events: none;
+    }
+
+    @keyframes moveUp {
+        0% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-100px); }
+    }
+</style>
+</head>
+<body>
+
+<h1>Boring Shoaib</h1>
+
+<div id="coinCount">Coins: 0</div>
+<button id="coinButton">Tap Me!</button>
+
+<script>
+    // Load coins from localStorage
+    let coins = parseInt(localStorage.getItem('coins')) || 0;
+    const coinCount = document.getElementById('coinCount');
+    const button = document.getElementById('coinButton');
+
+    // Update coin display
+    function updateCoins() {
+        coinCount.textContent = 'Coins: ' + coins;
+    }
+
+    updateCoins();
+
+    button.addEventListener('click', () => {
+        coins += 1;
+        localStorage.setItem('coins', coins);
+        updateCoins();
+
+        // Create +1 animation
+        const plusOne = document.createElement('div');
+        plusOne.classList.add('plusOne');
+        plusOne.textContent = '+1 Coin';
+        
+        // Random horizontal position
+        plusOne.style.left = Math.random() * (button.offsetWidth - 50) + 'px';
+        plusOne.style.top = '50%';
+
+        button.appendChild(plusOne);
+
+        setTimeout(() => {
+            plusOne.remove();
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>
